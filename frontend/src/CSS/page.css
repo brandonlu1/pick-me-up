@@ -1,0 +1,101 @@
+p{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.pickup--page--container{
+    min-width:100%;
+    min-height:100vh;
+    padding-bottom:10vh;
+    background-color: #5a6586;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pickup--content{
+    width:clamp(50%, 50%, 80%)
+}
+
+.pickup--box--container{
+    background-color: #515872;
+    border: 1px #44495e solid;
+    height:400px;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 16px;
+    justify-content: center;
+    margin-top:20vh;
+}
+
+.pickup--header{
+    font-size: 4rem;
+    color:white;
+}
+
+.pickup--input{
+    width:60%;
+    height:30px;
+    padding:10px;
+    font-size: 1.5rem;
+    border-style:none;
+    margin-bottom: 100px;
+}
+
+.pickup--input:focus{
+    outline-color: rgb(180, 180, 180);
+    border:none;
+}
+
+.pickup--results--text{
+    font-size: 2.5rem;
+    color:white;
+    text-align: left;
+}
+
+@media only screen and (max-width: 1200px) {
+    .pickup--content{
+        width:70%;
+    }
+
+    .pickup--box--container{
+        height:300px;
+    }
+    
+    .pickup--header{
+        font-size: 3.5rem;
+    }
+    
+    .pickup--input{
+        width:70%;
+    }
+
+    .pickup--results--text{
+        font-size: 2.5rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .pickup--content{
+        width:80%;
+    }
+
+    .pickup--box--container{
+        height:300px;
+    }
+    
+    .pickup--header{
+        font-size: 2.8rem;
+    }
+    
+    .pickup--input{
+        width:80%;
+        height:25px;
+        padding:6px;
+        font-size: 1.25rem;
+    }
+
+    .pickup--results--text{
+        font-size: 2rem;
+    }
+}
