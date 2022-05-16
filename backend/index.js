@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
   })  
 })
 
-app.get('/get-pickup-lines', async (req, res)=>{
+app.put('/get-pickup-lines', async (req, res)=>{
     console.log("--------------/get-pickup-lines--------------")
     client.connect(async err => {
         const collection = client.db("pickMeUp").collection("pickMeUp.pickupLines");

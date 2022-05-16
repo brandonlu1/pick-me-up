@@ -6,6 +6,7 @@ export default function PickMeUp(){
     //States
     const [searched, setSearched] = useState(false);
     const [name, setName] = useState("");
+    const [results, setResult] = useState([])
 
     //Handles user input change
     const handleChange = (e) => {
@@ -16,6 +17,14 @@ export default function PickMeUp(){
         if (e.key === "Enter" && name != ""){
             setSearched(true)
             console.log(name)
+            fetch('http://localhost:5000/get-pickup-lines', {
+                method: "PUT",
+                headers: {"Content-Type": "application/json",},
+                body: JSON.stringify({name})})
+            .then((res)=>{if (res.status === 200){
+                setResult(res)
+            }})
+            .catch((error)=>{console.log("error: ",error)})
         }
     }
 
@@ -29,12 +38,7 @@ export default function PickMeUp(){
             {searched ? 
             <div>
             <p className="pickup--results--text">Results</p>
-            <LineCard line="Louren Ipsum Louren Ipsum Louren Ipsum Louren Ipsum Louren Ipsum Louren Ipsum"/>
-            <LineCard line="Louren Ipsum Louren Ipsum Louren Ipsum Louren Ipsum"/>
-            <LineCard line="Louren Ipsum Louren Ipsum Louren Ipsum"/>
-            <LineCard line="Louren Ipsum Louren Ipsum Louren Ipsum Louren Ipsum Louren Ipsum"/>
-            <LineCard line="Louren Ipsum Louren Ipsum"/>
-            <LineCard line="Louren Ipsum Louren Ipsum Louren Ipsum"/>
+            {results.map(line => <LineCard line={line.line}/>)}
             </div> : <div/>}
         </div>
     </div>)
