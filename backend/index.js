@@ -13,8 +13,9 @@ app.use(cors())
 app.use(json())
 
 app.get('/', (req, res) => {
+    console.log("--------------/--------------")
   client.connect(async err => {
-    const collection = client.db("BlackJack").collection("Users");
+    const collection = client.db("pickMeUp").collection("pickMeUp.pickupLines");
     if (err){
       res.send("Error: ", err)
     }
@@ -24,6 +25,22 @@ app.get('/', (req, res) => {
   })  
 })
 
+app.get('/get-pickup-lines', async (req, res)=>{
+    console.log("--------------/get-pickup-lines--------------")
+    client.connect(async err => {
+        const collection = client.db("pickMeUp").collection("pickMeUp.pickupLines");
+        collection.find({}).sort({rating:-1}).toArray((err, result) => {
+            if (err){
+                res.send(err)
+                res.send(400)
+            }
+            else{
+                res.send(result)
+                res.sendStatus(200)
+            }
+        })
+    })
+  }) 
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`)
