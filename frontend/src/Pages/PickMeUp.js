@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LineCard from "../Components/LineCard";
 import "../CSS/page.css";
 
@@ -6,6 +6,7 @@ export default function PickMeUp(){
     //States
     const [searched, setSearched] = useState(false);
     const [name, setName] = useState("");
+    const [lastSearch, setLastSearch] = useState("")
     const [results, setResult] = useState([])
 
     //Handles user input change
@@ -14,16 +15,22 @@ export default function PickMeUp(){
     }
     //Handles user input entry
     const handleEnter = (e) => {
-        if (e.key === "Enter" && name != ""){
+        if (e.key === "Enter" && name !== "" && name != lastSearch){
             setSearched(true)
-            console.log(name)
+            setLastSearch(name)
             fetch('http://localhost:5000/get-pickup-lines', {
                 method: "PUT",
                 headers: {"Content-Type": "application/json",},
                 body: JSON.stringify({name})})
-            .then((res)=>{if (res.status === 200){
-                setResult(res)
-            }})
+            .then(res => res.json())
+            .then((res)=>{
+                if (res !== null){
+                    setResult(res)
+                }
+                else{
+                    console.log("Could not find results")
+                }
+        })
             .catch((error)=>{console.log("error: ",error)})
         }
     }
