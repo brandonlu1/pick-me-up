@@ -13,7 +13,6 @@ def scrape_reddit():
     database = db["pickMeUp"]
     collection = database["pickupLines"]
 
-
     app_secret = secret.SECRET
     app_client_id = secret.CLIENT_ID
 
@@ -24,18 +23,23 @@ def scrape_reddit():
 
     print("Scraping r/", subreddit.display_name)
 
+    #Actions for each post in subreddit
     for post in subreddit.search("pickup lines for"):
         title = post.title
         # print(split)
         for word in title.split():
+            #Checks if name is in hash map
             if word.lower() in map:
+                #queries through comments for pickup lines
                 for comment in post.comments:
                     if isinstance(comment, MoreComments):
                         continue
+                    #Adds pickup line into MongoDB
                     if (word.lower() in comment.body.lower()):
                         collection.insert_one({"rating":1, "line": comment.body, "name": word})
     print("Finished")
 
+#Create hash map containing top 500 boys and girls names
 def make_hashMap():
     map = {}
     with open('scraper/boys.txt') as file:

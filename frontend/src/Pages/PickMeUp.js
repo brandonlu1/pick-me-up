@@ -8,6 +8,7 @@ export default function PickMeUp(){
     const [name, setName] = useState("");
     const [lastSearch, setLastSearch] = useState("")
     const [results, setResult] = useState([])
+    const [resultsTitle, setResultsTitle] = useState("Results")
 
     //Handles user input change
     const handleChange = (e) => {
@@ -24,12 +25,16 @@ export default function PickMeUp(){
                 body: JSON.stringify({name})})
             .then(res => res.json())
             .then((res)=>{
-                if (res !== null){
+                console.log(res)
+                if (res.length > 0){ 
                     setResult(res)
-                }
-                else{
-                    console.log("Could not find results")
-                }
+                    setResultsTitle("Results")
+                 }
+                else{ 
+                    console.log("HELLO")
+                    setResultsTitle("Could not find anything :(")
+                    setResult([])
+                 }
         })
             .catch((error)=>{console.log("error: ",error)})
         }
@@ -44,7 +49,8 @@ export default function PickMeUp(){
             </div>
             {searched ? 
             <div>
-            <p className="pickup--results--text">Results</p>
+            <p className="pickup--results--text">{resultsTitle}</p>
+             {/**Maps pickup line cards */}
             {results.map(line => <LineCard line={line.line}/>)}
             </div> : <div/>}
         </div>
