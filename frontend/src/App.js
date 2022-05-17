@@ -4,5 +4,4 @@ function App() {
     <PickMeUp/>
   );
 }
-
 export default App;
