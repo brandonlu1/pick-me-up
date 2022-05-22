@@ -1,5 +1,4 @@
 import "../CSS/Components/linecard.css"
-import { useEffect, useState } from "react";
 
 export default function LineCard(props){
     return(

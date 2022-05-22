@@ -26,15 +26,36 @@ app.get('/', (req, res) => {
 })
 
 app.put('/get-pickup-lines', async (req, res)=>{
-    console.log("--------------/get-pickup-lines--------------")
-    const {name: nameDB} = req.body;
-    client.connect(async err => {
-        const collection = client.db("pickMeUp").collection("pickMeUp.pickupLines");
-        collection.find({name:nameDB}).sort({rating:-1}).toArray((err, result) => {
-          res.send(result.slice(result.length/2))
-        })
-    })
-  }) 
+  console.log("--------------/get-pickup-lines--------------")
+  const {name: nameDB} = req.body;
+  client.connect(async err => {
+      const collection = client.db("pickMeUp").collection("pickMeUp.pickupLines");
+      collection.find({name:nameDB}).sort({rating:-1}).toArray((err, result) => {
+        res.send(result.slice(result.length/2))
+      })
+  })
+}) 
+
+app.post('/new-pickup-line', async (req, res)=>{
+  console.log("--------------/new-pickup-line--------------")
+  const {line: lineDB, name:nameDB} = req.body;
+  let newLine = {
+    rating:1,
+    line:lineDB,
+    name:nameDB
+  }
+  client.connect(async err => {
+      const collection = client.db("pickMeUp").collection("pickMeUp.pickupLines");
+      if (collection.findOne({line:lineDB})){
+        res.sendStatus(409)
+        console.log("There is already a line like that.")
+      }
+      else{
+        console.log("Added new line.")
+        collection.insertOne(newLine)
+      }
+  })
+}) 
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`)
