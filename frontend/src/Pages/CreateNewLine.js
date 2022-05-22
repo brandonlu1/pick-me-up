@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 import "../CSS/page.css";
-import "../CSS/Pages/newline.css"
+import "../CSS/Pages/newline.css";
+
 
 export default function CreateNewLine(){
     //States
     const [line, setLine] = useState("")
     const [name, setName] = useState("")
     const [valid, setValid] = useState(true)
+
+    const navigate = useNavigate();
 
     const banned = ["chink", "fagg", "nigg"]
 
@@ -19,31 +23,27 @@ export default function CreateNewLine(){
     }
 
     const createNewLine = () => {
-        console.log("HELLO")
-        console.log(line)
-        if (name !== "" && line !== "" && line.includes(name) && !(line.includes(banned[0]) || line.includes(banned[1]) || line.includes(banned[2]))){
+        if (name !== "" && line !== "" && line.toLowerCase().includes(name.toLowerCase()) && !(line.toLowerCase().includes(banned[0]) || line.toLowerCase().includes(banned[1]) || line.toLowerCase().includes(banned[2]))){
             fetch('http://localhost:5000/new-pickup-line', {
                 method: "POST",
                 headers: {"Content-Type": "application/json",},
                 body: JSON.stringify({line, name})})
-            .then(res => res.json())
             .then((res)=>{
-                console.log(res)
-                if (res.status === 200){ 
-                    setName("")
-                    setValid(true)
-                    setLine("")
+                if (res.ok){ 
+                    navigate("/")
+                    console.log("added new line: ", line)
                  }
-                 if (res.status === 409){
+                 else{
                      setValid(false)
+                     console.log("Invalid line:", line)
                  }
                 })
+                .catch((error)=>{console.log("error: ",error)})
         }
         else{
-            console.log("invalid")
             setValid(false)
+            console.log("Invalid line: ", line)
         }
-        console.log("DONE")
     }
     return(
     <div className="pickup--page--container">

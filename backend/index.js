@@ -46,12 +46,13 @@ app.post('/new-pickup-line', async (req, res)=>{
   }
   client.connect(async err => {
       const collection = client.db("pickMeUp").collection("pickMeUp.pickupLines");
-      if (collection.findOne({line:lineDB})){
+      if (await collection.findOne({line:lineDB})){
         res.sendStatus(409)
         console.log("There is already a line like that.")
       }
       else{
-        console.log("Added new line.")
+        console.log("Added new line: ", lineDB)
+        res.sendStatus(200)
         collection.insertOne(newLine)
       }
   })

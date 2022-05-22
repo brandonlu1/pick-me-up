@@ -33,7 +33,7 @@ export default function PickMeUp(){
                 if (res.length > 0){ 
                     setResult(res)
                     setResultsTitle("Results")
-                    //navigate(`/${name}`)
+                    navigate(`/${name}`)
                     
                  }
                 else{ 
