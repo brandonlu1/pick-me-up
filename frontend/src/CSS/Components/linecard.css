@@ -1,13 +1,6 @@
 .linecard--container{
-    background-color: #515872;
-    border: 1px #494f66 solid;
-    min-height:85px;
+    background-color: #272727;
     border-radius: 6px;
-    margin-top:10px;
-    margin-bottom: 10px;
-    display:flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .linecard--line{

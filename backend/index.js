@@ -28,10 +28,12 @@ app.get('/', (req, res) => {
 app.put('/get-pickup-lines', async (req, res)=>{
   console.log("--------------/get-pickup-lines--------------")
   const {name: nameDB} = req.body;
+  console.log(nameDB)
   client.connect(async err => {
       const collection = client.db("pickMeUp").collection("pickMeUp.pickupLines");
       collection.find({name:nameDB}).sort({rating:-1}).toArray((err, result) => {
         res.send(result.slice(result.length/2))
+        console.log(result)
       })
   })
 }) 

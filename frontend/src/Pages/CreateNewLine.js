@@ -23,6 +23,7 @@ export default function CreateNewLine(){
     }
 
     const createNewLine = () => {
+        console.log(typeof line + " " + line)
         if (name !== "" && line !== "" && line.toLowerCase().includes(name.toLowerCase()) && !(line.toLowerCase().includes(banned[0]) || line.toLowerCase().includes(banned[1]) || line.toLowerCase().includes(banned[2]))){
             fetch('http://localhost:5000/new-pickup-line', {
                 method: "POST",

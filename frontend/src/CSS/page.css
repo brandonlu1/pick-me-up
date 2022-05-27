@@ -12,16 +12,10 @@ p{
 }
 
 .pickup--content{
-    width:clamp(50%, 50%, 80%);
-    height:70vh;
+    width:100%;
+    height:0vh;
     margin-top:20vh;
-}
-
-.pickup--box--container{
-    display:flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+    background-color: red;
 }
 
 .pickup--header{
@@ -64,19 +58,12 @@ p{
 }
 
 @media only screen and (max-width: 1200px) {
-    .pickup--content{
-        width:70%;
-    }
-
     .pickup--results--text{
         font-size: 2.5rem;
     }
 }
 
 @media only screen and (max-width: 768px) {
-    .pickup--content{
-        width:80%;
-    }
     .pickup--results--text{
         font-size: 2rem;
     }
