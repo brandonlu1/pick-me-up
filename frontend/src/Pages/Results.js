@@ -9,7 +9,6 @@ export default function Results(props){
     const [name, setName] = useState("");
     const [lastSearch, setLastSearch] = useState("")
     const [results, setResult] = useState([])
-    const [resultsTitle, setResultsTitle] = useState("Results")
 
     const navigate = useNavigate();
 
@@ -26,10 +25,8 @@ export default function Results(props){
             console.log("response: ", response)
             if (response.length > 0){ 
                 setResult(response)
-                setResultsTitle("Results")
              }
             else{ 
-                setResultsTitle("Could not find anything :(")
                 setResult([])
              }
     })
@@ -44,16 +41,23 @@ export default function Results(props){
     const handleEnter = (e) => {
         if (e.key === "Enter" && name !== "" && name !== lastSearch){
                 navigate(`/${name}`)
-        //     setLastSearch(name)
-        //     fetch('http://localhost:5000/get-pickup-lines', {
-        //         method: "PUT",
-        //         headers: {"Content-Type": "application/json",},
-        //         body: JSON.stringify({name})})
-        //     .then(res => res.json())
-        //     .then((res)=>{
-        //         navigate(`/${name}`)
-        // })
-        //     .catch((error)=>{console.log("error: ",error)})
+            setLastSearch(name)
+            fetch('http://localhost:5000/get-pickup-lines', {
+                method: "PUT",
+                headers: {"Content-Type": "application/json",},
+                body: JSON.stringify({name})})
+            .then(res => res.json())
+            .then((response)=>{
+                navigate(`/${name}`)
+                console.log("response: ", response)
+                if (response.length > 0){ 
+                    setResult(response)
+                 }
+                else{ 
+                    setResult([])
+                 }
+        })
+            .catch((error)=>{console.log("error: ",error)})
         }
     }
 
@@ -63,9 +67,14 @@ export default function Results(props){
         <p className="results--header">Qoogle</p>
         <input className="results--input" id="user-input" placeholder="Search a name" onChange={(e)=>handleChange(e)} onKeyDown={(e)=>handleEnter(e)}/>  
         </div>
-        <div className="pickup--content">
+        <div className="result--content">
+            <div className="showing--results">
+                <p className="showing--results--text">Showing results for&nbsp;</p>
+                <p className="showing--results--results">{name}</p>
+            </div>
             {/**Maps pickup line cards */}
-            {results.map(line => <LineCard key={line.line} line={line.line}/>)}
+            {results.length > 0 ? results.map(line => <LineCard key={line.line} line={line.line} name={line.name} rating={line.rating}/>) : <p className="notFound--text">Cannot find any results :(</p>}
         </div>
-    </div>)
+    </div>
+    )
 }

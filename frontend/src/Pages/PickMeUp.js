@@ -22,13 +22,11 @@ export default function PickMeUp(){
     return(
     <div className="pickup--page--container">
         <div className="pickup--content">
-            <div className="pickup--box--container">
-                <p className="pickup--header">Qoogle</p>
-                <input className="pickup--input" id="user-input" placeholder="Search a name" onChange={(e)=>handleChange(e)} onKeyDown={(e)=>handleEnter(e)}/>  
-                <div className="pickup--line--options">
-                    <OptionButton text="Create Line" to="/create-new-pickup-line"/>
-                    <OptionButton text="Search by Word"/>
-                </div>
+            <p className="pickup--header">Qoogle</p>
+            <input className="pickup--input" id="user-input" placeholder="Search a name" onChange={(e)=>handleChange(e)} onKeyDown={(e)=>handleEnter(e)}/>  
+            <div className="pickup--line--options">
+                <OptionButton text="Create Line" to="/create-new-pickup-line"/>
+                <OptionButton text="Search by Word"/>
             </div>
         </div>
         <div className="footer">
